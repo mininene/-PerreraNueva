@@ -50,7 +50,7 @@ namespace PerreraNueva.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest) ;
             }
             Adopciones adopciones = await Task.Run(() => _adopcionesRepository.GetById(id));
             if (adopciones == null)
