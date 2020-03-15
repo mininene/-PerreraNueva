@@ -1,0 +1,58 @@
+﻿@model PerreraNueva.Models.Perros
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Perros</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Chip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Chip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaNacimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Jaulas.NombreJaula)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jaulas.NombreJaula)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Razas.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Razas.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

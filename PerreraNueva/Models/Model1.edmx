@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PerreraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adopciones">
+          <Key>
+            <PropertyRef Name="PerroId" />
+            <PropertyRef Name="ClienteId" />
+            <PropertyRef Name="EmpleadoId" />
+            <PropertyRef Name="FechaEntrega" />
+          </Key>
+          <Property Name="PerroId" Type="int" Nullable="false" />
+          <Property Name="ClienteId" Type="int" Nullable="false" />
+          <Property Name="EmpleadoId" Type="int" Nullable="false" />
+          <Property Name="FechaEntrega" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreCompleto" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" />
+          <Property Name="Correo" Type="varchar" MaxLength="125" />
+          <Property Name="DNI" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreCompleto" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" />
+          <Property Name="Correo" Type="varchar" MaxLength="125" />
+          <Property Name="DNI" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Jaulas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreJaula" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Perros">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Chip" Type="varchar" MaxLength="10" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="CodRazaId" Type="int" />
+          <Property Name="IdJaula" Type="int" />
+        </EntityType>
+        <EntityType Name="Razas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Adopciones_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="Adopciones" Type="Self.Adopciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adopciones">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Adopciones_Empleados">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Adopciones" Type="Self.Adopciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adopciones">
+              <PropertyRef Name="EmpleadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Adopciones_Perros">
+          <End Role="Perros" Type="Self.Perros" Multiplicity="1" />
+          <End Role="Adopciones" Type="Self.Adopciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perros">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adopciones">
+              <PropertyRef Name="PerroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Perros_Jaulas">
+          <End Role="Jaulas" Type="Self.Jaulas" Multiplicity="0..1" />
+          <End Role="Perros" Type="Self.Perros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jaulas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Perros">
+              <PropertyRef Name="IdJaula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Perros_Razas">
+          <End Role="Razas" Type="Self.Razas" Multiplicity="0..1" />
+          <End Role="Perros" Type="Self.Perros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Razas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Perros">
+              <PropertyRef Name="CodRazaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PerreraModelStoreContainer">
+          <EntitySet Name="Adopciones" EntityType="Self.Adopciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jaulas" EntityType="Self.Jaulas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Perros" EntityType="Self.Perros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Razas" EntityType="Self.Razas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Adopciones_Clientes" Association="Self.FK_Adopciones_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Adopciones" EntitySet="Adopciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Adopciones_Empleados" Association="Self.FK_Adopciones_Empleados">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Adopciones" EntitySet="Adopciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Adopciones_Perros" Association="Self.FK_Adopciones_Perros">
+            <End Role="Perros" EntitySet="Perros" />
+            <End Role="Adopciones" EntitySet="Adopciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Perros_Jaulas" Association="Self.FK_Perros_Jaulas">
+            <End Role="Jaulas" EntitySet="Jaulas" />
+            <End Role="Perros" EntitySet="Perros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Perros_Razas" Association="Self.FK_Perros_Razas">
+            <End Role="Razas" EntitySet="Razas" />
+            <End Role="Perros" EntitySet="Perros" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PerreraModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Adopciones">
+          <Key>
+            <PropertyRef Name="PerroId" />
+            <PropertyRef Name="ClienteId" />
+            <PropertyRef Name="EmpleadoId" />
+            <PropertyRef Name="FechaEntrega" />
+          </Key>
+          <Property Name="PerroId" Type="Int32" Nullable="false" />
+          <Property Name="ClienteId" Type="Int32" Nullable="false" />
+          <Property Name="EmpleadoId" Type="Int32" Nullable="false" />
+          <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_Adopciones_Clientes" FromRole="Adopciones" ToRole="Clientes" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK_Adopciones_Empleados" FromRole="Adopciones" ToRole="Empleados" />
+          <NavigationProperty Name="Perros" Relationship="Self.FK_Adopciones_Perros" FromRole="Adopciones" ToRole="Perros" />
+        </EntityType>
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreCompleto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
+          <Property Name="DNI" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Adopciones" Relationship="Self.FK_Adopciones_Clientes" FromRole="Clientes" ToRole="Adopciones" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreCompleto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
+          <Property Name="DNI" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Adopciones" Relationship="Self.FK_Adopciones_Empleados" FromRole="Empleados" ToRole="Adopciones" />
+        </EntityType>
+        <EntityType Name="Jaulas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreJaula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Perros" Relationship="Self.FK_Perros_Jaulas" FromRole="Jaulas" ToRole="Perros" />
+        </EntityType>
+        <EntityType Name="Perros">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Chip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="CodRazaId" Type="Int32" />
+          <Property Name="IdJaula" Type="Int32" />
+          <NavigationProperty Name="Adopciones" Relationship="Self.FK_Adopciones_Perros" FromRole="Perros" ToRole="Adopciones" />
+          <NavigationProperty Name="Jaulas" Relationship="Self.FK_Perros_Jaulas" FromRole="Perros" ToRole="Jaulas" />
+          <NavigationProperty Name="Razas" Relationship="Self.FK_Perros_Razas" FromRole="Perros" ToRole="Razas" />
+        </EntityType>
+        <EntityType Name="Razas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Perros" Relationship="Self.FK_Perros_Razas" FromRole="Razas" ToRole="Perros" />
+        </EntityType>
+        <Association Name="FK_Adopciones_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="Adopciones" Type="Self.Adopciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adopciones">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Adopciones_Empleados">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Adopciones" Type="Self.Adopciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adopciones">
+              <PropertyRef Name="EmpleadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Adopciones_Perros">
+          <End Role="Perros" Type="Self.Perros" Multiplicity="1" />
+          <End Role="Adopciones" Type="Self.Adopciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perros">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adopciones">
+              <PropertyRef Name="PerroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Perros_Jaulas">
+          <End Role="Jaulas" Type="Self.Jaulas" Multiplicity="0..1" />
+          <End Role="Perros" Type="Self.Perros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jaulas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Perros">
+              <PropertyRef Name="IdJaula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Perros_Razas">
+          <End Role="Razas" Type="Self.Razas" Multiplicity="0..1" />
+          <End Role="Perros" Type="Self.Perros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Razas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Perros">
+              <PropertyRef Name="CodRazaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PerreraEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adopciones" EntityType="Self.Adopciones" />
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+          <EntitySet Name="Jaulas" EntityType="Self.Jaulas" />
+          <EntitySet Name="Perros" EntityType="Self.Perros" />
+          <EntitySet Name="Razas" EntityType="Self.Razas" />
+          <AssociationSet Name="FK_Adopciones_Clientes" Association="Self.FK_Adopciones_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Adopciones" EntitySet="Adopciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Adopciones_Empleados" Association="Self.FK_Adopciones_Empleados">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Adopciones" EntitySet="Adopciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Adopciones_Perros" Association="Self.FK_Adopciones_Perros">
+            <End Role="Perros" EntitySet="Perros" />
+            <End Role="Adopciones" EntitySet="Adopciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Perros_Jaulas" Association="Self.FK_Perros_Jaulas">
+            <End Role="Jaulas" EntitySet="Jaulas" />
+            <End Role="Perros" EntitySet="Perros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Perros_Razas" Association="Self.FK_Perros_Razas">
+            <End Role="Razas" EntitySet="Razas" />
+            <End Role="Perros" EntitySet="Perros" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PerreraModelStoreContainer" CdmEntityContainer="PerreraEntities">
+          <EntitySetMapping Name="Adopciones">
+            <EntityTypeMapping TypeName="PerreraModel.Adopciones">
+              <MappingFragment StoreEntitySet="Adopciones">
+                <ScalarProperty Name="PerroId" ColumnName="PerroId" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="EmpleadoId" ColumnName="EmpleadoId" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="PerreraModel.Clientes">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleados">
+            <EntityTypeMapping TypeName="PerreraModel.Empleados">
+              <MappingFragment StoreEntitySet="Empleados">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jaulas">
+            <EntityTypeMapping TypeName="PerreraModel.Jaulas">
+              <MappingFragment StoreEntitySet="Jaulas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreJaula" ColumnName="NombreJaula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Perros">
+            <EntityTypeMapping TypeName="PerreraModel.Perros">
+              <MappingFragment StoreEntitySet="Perros">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Chip" ColumnName="Chip" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="CodRazaId" ColumnName="CodRazaId" />
+                <ScalarProperty Name="IdJaula" ColumnName="IdJaula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Razas">
+            <EntityTypeMapping TypeName="PerreraModel.Razas">
+              <MappingFragment StoreEntitySet="Razas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
